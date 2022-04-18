@@ -1,0 +1,17 @@
+{
+  "name": "actnodebd",
+  "version": "1.0.0",
+  "description": "Connection to database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Diego Guerrero",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mysql": "^2.18.1",
+    "request": "^2.88.2"
+  }
+}
