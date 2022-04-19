@@ -1,33 +1,40 @@
-// Paquete necesario para conectar a bases de datos MySQL.
-var mysql = require('mysql');
-// Consulta SQL.
-var sql = 'SELECT * FROM category LIMIT 10';
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var indexRouter = require('./routes/index');
+var app = express();
+// const PORT = 3000 | process.env.PORT
 
-// Parámetros de conexión a la base de datos.
-var con = mysql.createConnection({
-  host: "127.0.0",
-  user: "tu-user-de-db",
-  password: "tu-pass-de-db",
-  database : 'eshop'
+// view engine setup
+app.use('/', indexRouter);
+
+app.set('views', path.join(__dirname, 'views'));
+
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
-// Funcion que nos permite comprobar la conexión a la base de datos.
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected!");
-// });
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-// Funcion que nos devolverá resultados de la base de datos.
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-
-    // Bucle que recore los resultados y pinta en consola.
-    for(i=0; i<result.length; i++){
-    	console.log("Result: " + result[i].name);
-    }
-
-  });
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
+
+module.exports = app;
+// app.listen(PORT, () => console.log(`Server is running on port ${PORT}`)); 

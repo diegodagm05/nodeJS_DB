@@ -5,12 +5,12 @@ var sql = 'SELECT * FROM category LIMIT 10';
 
 // Parámetros de conexión a la base de datos.
 var con = mysql.createConnection({
-  host: "127.0.0",
-  user: "tu-user-de-db",
-  password: "tu-pass-de-db",
+  host: "localhost",
+  user: "root",
+  password: "diegodb",
   database : 'eshop'
 });
-
+module.exports = con;
 // Funcion que nos permite comprobar la conexión a la base de datos.
 // con.connect(function(err) {
 //   if (err) throw err;
@@ -28,6 +28,5 @@ con.connect(function(err) {
     for(i=0; i<result.length; i++){
     	console.log("Result: " + result[i].name);
     }
-
   });
 });
