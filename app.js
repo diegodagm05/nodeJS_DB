@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var app = express();
-// const PORT = 3000 | process.env.PORT
+const PORT = 3000 | process.env.PORT
 
 // view engine setup
 app.use('/', indexRouter);
@@ -36,5 +36,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
-// app.listen(PORT, () => console.log(`Server is running on port ${PORT}`)); 
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`)); 
